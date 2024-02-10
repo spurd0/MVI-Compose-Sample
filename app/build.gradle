@@ -3,12 +3,13 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-    id 'dagger.hilt.android.plugin'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
-    compileSdk 31
-
+    compileSdk 34
+    namespace = "com.example.mvi_compose_sample"
+    testNamespace = "com.example.mvi_compose_sample"
     defaultConfig {
         applicationId "com.example.mvi_compose_sample"
         minSdk 21
@@ -26,26 +27,20 @@ android {
         buildConfigField("String", "IMAGE_URL", "\"http://image.tmdb.org/t/p/w185\"")
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
-        useIR = true
     }
     buildFeatures {
         compose true
+        buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion composeVersion
-        kotlinCompilerVersion '1.5.31'
+        kotlinCompilerExtensionVersion = "1.5.9"
+        kotlinCompilerVersion '1.5.9'
     }
     packagingOptions {
         resources {
@@ -58,19 +53,22 @@ android {
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.31'
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.22'
+    implementation "androidx.core:core-ktx:1.12.0"
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation ('com.google.android.material:material:1.11.0') {
+        exclude group: 'androidx.activity', module: 'activity'
+    }
     implementation "com.google.accompanist:accompanist-insets:0.10.0"
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
     implementation 'io.github.a914-gowtham:compose-ratingbar:1.1.1'
-    implementation "io.coil-kt:coil-compose:1.4.0"
+    implementation "io.coil-kt:coil-compose:2.4.0"
 
     // navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-compose:$navVersion"
 
     // compose
     implementation "androidx.compose.ui:ui:$composeVersion"
